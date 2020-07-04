@@ -1,2 +1,3 @@
 # GoKraft
-Backend server for Gokraft platform
+* working on the backend server
+* using django for this
