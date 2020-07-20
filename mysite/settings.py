@@ -106,6 +106,9 @@ ACCOUNT_UNIQUE_EMAIL = True
 
 REST_USE_JWT = True
 
+#commit puepose XD
+
+
 
 
 
