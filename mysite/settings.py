@@ -25,7 +25,7 @@ SECRET_KEY = 'swpm-&qao-x7o^eqcdop4bi!_x1yw)goj+c%uzhd=!ne1*-5+j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -45,20 +45,19 @@ INSTALLED_APPS = [
 
     # authentication properties
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
     #'rest_auth.registration',
     #'allauth.socialaccount'
 
     #rest framework
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 
 #Auth
-
-
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
@@ -73,8 +72,8 @@ AUTHENTICATION_BACKENDS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        # 'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
@@ -88,13 +87,13 @@ REST_FRAMEWORK = {
 ####################################################
 
 
-# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_USERNAME_REQUIRED = False
-# ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
-# ACCOUNT_SESSION_REMEMBER = True
-# ACCOUNT_AUTHENTICATION_METHOD = 'email'
-# ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_UNIQUE_EMAIL = True
 
 # REST_AUTH_SERIALIZERS = {
 #     'USER_DETAILS_SERIALIZER': 'accounts.api.serializers.CustomUserDetailsSerializer',
@@ -105,7 +104,7 @@ REST_FRAMEWORK = {
 #     "REGISTER_SERIALIZER": "accounts.api.serializers.CustomRegisterSerializer",
 # }
 
-# REST_USE_JWT = True
+REST_USE_JWT = True
 
 
 
