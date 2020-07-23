@@ -58,7 +58,7 @@ INSTALLED_APPS = [
 
 
 #Auth
-#AUTH_USER_MODEL = 'accounts.Account'
+AUTH_USER_MODEL = 'accounts.Account'
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
