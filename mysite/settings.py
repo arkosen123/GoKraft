@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     #all installed appsadmin.site.register(Item)
     'itemAndCart.apps.ItemandcartConfig',
     'accounts',
-    #'userAccounts.apps.UseraccountsConfig',
+    
 
     # authentication properties
     'django.contrib.sites',
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
 
 
 #Auth
+#AUTH_USER_MODEL = 'accounts.Account'
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
@@ -77,8 +78,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
     ),
 }
 
@@ -87,22 +88,22 @@ REST_FRAMEWORK = {
 ####################################################
 
 
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
-ACCOUNT_SESSION_REMEMBER = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_UNIQUE_EMAIL = True
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+# ACCOUNT_SESSION_REMEMBER = True
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# ACCOUNT_UNIQUE_EMAIL = True
 
 # REST_AUTH_SERIALIZERS = {
 #     'USER_DETAILS_SERIALIZER': 'accounts.api.serializers.CustomUserDetailsSerializer',
 #     'LOGIN_SERIALIZER': 'accounts.api.serializers.CustomLoginSerializer',
 # }
 
-# REST_AUTH_REGISTER_SERIALIZERS = {
-#     "REGISTER_SERIALIZER": "accounts.api.serializers.CustomRegisterSerializer",
-# }
+REST_AUTH_REGISTER_SERIALIZERS = {
+    "REGISTER_SERIALIZER": "accounts.api.serializer.RegistrationSerializer",
+}
 
 REST_USE_JWT = True
 
@@ -149,7 +150,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_localDB_for_testing',
+        'NAME': 'my_localDB_for_testing1',
         'USER': 'postgres',
         'PASSWORD': 'abc12345',
         'HOST': 'localhost',

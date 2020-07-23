@@ -48,16 +48,22 @@ def registration_view(request):
 			return Response(data)
 
 		serializer = RegistrationSerializer(data = request.data)
-		if serializer.is_valid():
-			account = serializer.save()
-			data['response'] = 'user registered succesfully'
-			data['username'] = account.username
-			data['email'] = account.email
+		# if serializer.is_valid():
+		# 	account = serializer.save()
+		# 	data['response'] = 'user registered succesfully'
+		# 	data['username'] = account.username
+		# 	data['email'] = account.email
 		
-		else:
-			data = serializer.errors
-		return Response(data)
+		# else:
+		# 	data = serializer.errors
+		# return Response(data)
 
+		account = serializer.save()
+		data['response'] = 'user registered succesfully'
+		data['username'] = account.username
+		data['email'] = account.email
+
+		return Response(data)
 
 
 

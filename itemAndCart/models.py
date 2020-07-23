@@ -5,6 +5,8 @@ from django.db import models
 from django.conf import settings 
 from django.shortcuts import reverse
 
+from accounts.models import Account
+
 
 # Create your models here.
 
@@ -33,7 +35,8 @@ class OrderItem(models.Model):
         return self.title
 
 class Order(models.Model):
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    #user_id = user.pk
     items =  models.ManyToManyField(OrderItem)
     start_dates = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField(auto_now_add=True)
