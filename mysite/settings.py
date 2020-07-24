@@ -262,7 +262,13 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  
+    ]
+}
 
+AUTH_USER_MODEL = 'accounts.Account'
 
 SITE_ID = 1
 
@@ -304,7 +310,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_localDB_for_testing1',
+        'NAME': 'my_localDB_for_testing',
         'USER': 'postgres',
         'PASSWORD': 'abc12345',
         'HOST': 'localhost',

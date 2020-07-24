@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes,authentication_classes
+from rest_framework.authtoken.models import Token
 from django.core.exceptions import ValidationError
 
 
@@ -53,6 +54,8 @@ def registration_view(request):
 			data['response'] = 'user registered succesfully'
 			data['username'] = account.username
 			data['email'] = account.email
+			token = Token.objects.get(user = account).key
+			data['Token'] = token
 		
 		else:
 			data = serializer.errors
