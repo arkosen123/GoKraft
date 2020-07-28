@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -97,6 +97,11 @@ def api_add_to_cart(request, slug):
         return Response(status= status.HTTP_400_BAD_REQUEST)
     
     data = {}
+    if int(request.data['quantity']) < 0:
+        data['faliure'] = 'Item number cannot be less than zero'
+        return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+
+
     order_item, created = OrderItem.objects.get_or_create(item=item,
                                                 user = request.user,
                                                 ordered = False)
@@ -135,7 +140,7 @@ def api_add_to_cart(request, slug):
 
 @api_view(['DELETE',])
 @permission_classes((IsAuthenticated,))
-def api_remove_from__cart(request, slug):
+def api_remove_from_cart(request, slug):
     item = get_object_or_404(Item,slug=slug)
     if item == None:
         return Response(status= status.HTTP_400_BAD_REQUEST)
@@ -145,8 +150,9 @@ def api_remove_from__cart(request, slug):
     if order_qs.exists():
         order = order_qs[0]
         if order.items.filter(item__slug=item.slug).exists():
-            order_item= order.objects.filter(item=item,user = request.user, ordered = False)[0]
+            order_item= OrderItem.objects.filter(item=item,user = request.user, ordered = False)[0]
             order.items.remove(order_item)
+            order_item.delete()
             data['delete'] = 'Order deleted successfully.'
         else:
             data['delete']="User doesn't contain the order."

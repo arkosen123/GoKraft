@@ -28,5 +28,6 @@ urlpatterns = [
 
     #rest apis
     path('api/item/', include('itemAndCart.api.urls', 'itemAndCart_api')),
+    path('api/cart/', include('itemAndCart.api.cartUrls','itemAndcart_cart_api')),
     path('api/account/', include('accounts.api.urls','accounts_api')),
 ]
