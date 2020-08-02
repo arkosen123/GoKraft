@@ -67,7 +67,7 @@ def api_delete_item_details(request, slug):
         data['faliure'] = 'User is not the seller of this item'
         return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
     
-    if request.method == 'DELETE':
+    if request.method == 'DELETE':  
         opetation = item_object.delete()
         if opetation:
             data["success"] = "Delete successful"
@@ -87,6 +87,7 @@ def api_create_item_details(request):
     item_object = Item(slug = temp)
     item_object.seller = request.user
     if request.method == 'POST':
+        #request.data['seller'] = request.user.__str__()
         serializer = ItemSerializer(item_object, data = request.data)
         if serializer.is_valid():
             serializer.save()
@@ -126,13 +127,37 @@ def api_add_to_cart(request, slug):
         order = order_qs[0]
         #check if the order item is in the order
         if order.items.filter(item__slug=item.slug).exists():
+            # these are amounts before update
+            amount = order_item.get_total_amount()
+            saving = order_item.get_saving()
+
+            # quantity updated
             order_item.quantity += int(request.data['quantity'])
+
+            # amounts for order_item updated
+            order_item.amount = order_item.get_total_amount()
+            order_item.saving = order_item.get_saving()
             order_item.save()
+
+            # now we need to increase the amounts of our order
+            order.amount += order_item.get_total_amount() - amount
+            order.saving += order_item.get_saving() - saving
+            order.save()
             data['success'] = 'Cart updated successfully.'
 
         else:
             order_item.quantity = int(request.data['quantity'])
+            # amounts for order_item updated
+            order_item.amount = order_item.get_total_amount()
+            order_item.saving = order_item.get_saving()
             order_item.save()
+
+
+            # update the order amount and total saving
+            order.amount += order_item.get_total_amount()
+            order.saving += order_item.get_saving()
+            order.save()
+
             order.items.add(order_item)
             data['success'] = 'Item added to cart successfully.'
 
@@ -140,12 +165,20 @@ def api_add_to_cart(request, slug):
         ordered_date = timezone.now()
         order = Order.objects.create(user = request.user, ordered_date = ordered_date)
         order_item.quantity = int(request.data['quantity'])
+        order_item.amount = order_item.get_total_amount()
+        order_item.saving = order_item.get_saving()
         order_item.save()
         order.items.add(order_item)
+        order.amount = order.get_total_amount()
+        order.saving = order.get_total_saving()
+        order.save()
+
         data['success'] = 'Item added to cart successfully.'
 
     data['user'] = request.user.email
     data['quantity'] = order_item.__str__()
+    data['total cart price'] = order.amount
+    data['total saving'] = order.saving
     
 
     return Response(data = data, status = status.HTTP_200_OK)
@@ -164,7 +197,12 @@ def api_remove_from_cart(request, slug):
         order = order_qs[0]
         if order.items.filter(item__slug=item.slug).exists():
             order_item= OrderItem.objects.filter(item=item,user = request.user, ordered = False)[0]
+
+            # upsate the order basically cart
+            order.amount -= order_item.amount
+            order.saving -= order_item.saving
             order.items.remove(order_item)
+            order.save()
             order_item.delete()
             data['delete'] = 'Order deleted successfully.'
         else:
@@ -173,4 +211,10 @@ def api_remove_from_cart(request, slug):
         data['delete']="User doesn't have any order."
 
     return Response(data = data, status = status.HTTP_200_OK)
+
+
+
+
+
+    
 
