@@ -27,6 +27,7 @@ def api_get_item_details(request, slug):
 
 @api_view(['PUT',])
 def api_update_item_details(request, slug):
+    data = {}
     try:
         item_object = Item.objects.get(slug = slug)
         temp = request.data['title']
@@ -34,9 +35,14 @@ def api_update_item_details(request, slug):
         item_object.slug = temp
     except Item.doesNotExist:
         return Response(status = status.HTTP_404_NOT_FOUND)
+    
+
+    if item_object.seller != request.user:
+        data['faliure'] = 'User is not the seller of this item'
+        return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'PUT':
-        data = {}
+        
         serializer = ItemSerializer(item_object, data = request.data)
         if serializer.is_valid():
             serializer.save()
@@ -49,13 +55,19 @@ def api_update_item_details(request, slug):
 
 @api_view(['DELETE',])
 def api_delete_item_details(request, slug):
+    data = {}
     try:
         item_object = Item.object.get(slug = slug)
     except Item.doesNotExist:
         return Response(status = status.HTTP_404_NOT_FOUND)
+
+
+
+    if item_object.seller != request.user:
+        data['faliure'] = 'User is not the seller of this item'
+        return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
     
     if request.method == 'DELETE':
-        data = {}
         opetation = item_object.delete()
         if opetation:
             data["success"] = "Delete successful"
@@ -73,6 +85,7 @@ def api_create_item_details(request):
     temp = request.data['title']
     temp = temp.replace(' ','-')
     item_object = Item(slug = temp)
+    item_object.seller = request.user
     if request.method == 'POST':
         serializer = ItemSerializer(item_object, data = request.data)
         if serializer.is_valid():

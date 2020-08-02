@@ -4,7 +4,7 @@ from .models import Item,Order,OrderItem
 # Register your models here.
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'price', 'discounted_price')
+    list_display = ('title', 'category', 'price', 'discounted_price','seller')
     list_filter = ('category','price')
     search_fields = ('title','category')
 

@@ -25,6 +25,7 @@ urlpatterns = [
 
     ##########################
     #now all the order request
+    #moved to cartUrls.py
     ##########################
 
 #     path('add-to-cart/<slug>', api_add_to_cart, name = 'add_to_cart'),

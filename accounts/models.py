@@ -43,6 +43,7 @@ class Account(AbstractBaseUser):
 	date_joined				= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
 	last_login				= models.DateTimeField(verbose_name='last login', auto_now=True)
 	is_admin				= models.BooleanField(default=False)
+	is_seller				= models.BooleanField(default=False)
 	is_active				= models.BooleanField(default=True) # for deletion of an account just make is false
 	is_staff				= models.BooleanField(default=False)
 	is_superuser			= models.BooleanField(default=False)

@@ -16,6 +16,8 @@ class Item(models.Model):
     description = models.TextField()
     price = models.FloatField()
     discounted_price = models.FloatField(null=True, blank=True)
+    picture = models.ImageField(blank = True, null = True)
+    seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = models.SlugField(unique = True)
 
     def __str__(self):
