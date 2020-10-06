@@ -312,12 +312,21 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'my_localDB_for_testing',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'abc12345',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    # }
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_localDB_for_testing',
-        'USER': 'postgres',
-        'PASSWORD': 'abc12345',
-        'HOST': 'localhost',
+        'NAME': 'd7unn0dci48ie4',
+        'USER': 'aiyajylbzchqji',
+        'PASSWORD': '3715b4f9777b82f3019309368eeae441aa30320bd096842a4b48ad0a47b8cbd8',
+        'HOST': 'ec2-54-165-164-38.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
