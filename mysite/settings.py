@@ -239,13 +239,12 @@ SECRET_KEY = 'swpm-&qao-x7o^eqcdop4bi!_x1yw)goj+c%uzhd=!ne1*-5+j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    #'music.apps.MusicConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -259,7 +258,7 @@ INSTALLED_APPS = [
 
     #rest_framwork
     'rest_framework',
-    'rest_framework.authtoken',
+    'rest_framework.authtoken'
 ]
 
 REST_FRAMEWORK = {
