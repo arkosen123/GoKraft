@@ -52,7 +52,7 @@ class Account(AbstractBaseUser):
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['username']
 
-	objects = MyAccountManager()
+	
 
 	def __str__(self):
 		return self.email
