@@ -37,6 +37,8 @@ class OrderItem(models.Model):
     amount = models.FloatField(default = 0)
     saving = models.FloatField(default = 0)
 
+    amount = models.FloatField(default=0)
+    saving = models.FloatField(default = 0)
 
 
     def __str__(self):
