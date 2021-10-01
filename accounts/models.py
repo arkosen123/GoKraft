@@ -8,7 +8,7 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
 
-class MyAccountManager(BaseUserManager):
+class MyAccountManager():
 	def create_user(self, email, username, password=None):
 		if not email:
 			raise ValueError('Users must have an email address')
