@@ -66,8 +66,7 @@ class Order(models.Model):
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False) #to ensure the order has not completed
 
-    amount = models.FloatField(default=0)
-    saving = models.FloatField(default = 0)
+    
 
 
     def __str__(self):
